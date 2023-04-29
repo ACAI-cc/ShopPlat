@@ -56,7 +56,7 @@ export default {
   methods: {
     // 编程式导航(搜索按钮的回调函数)：跳转到search页面
     goSearch(){
-      this.$router.push('/search')
+      this.$router.replace('/search');
     }
   },
 };

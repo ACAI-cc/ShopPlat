@@ -19,6 +19,7 @@ import Like from "@/pages/Home/Like";
 import Floor from "@/pages/Home/Floor";
 import Brand from "@/pages/Home/Brand";
 
+
 export default {
   name:"Home",
   components:{    
