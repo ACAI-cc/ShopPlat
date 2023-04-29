@@ -1,12 +1,33 @@
 // home模块的仓库
 
-// state：仓库存储数据的地方
-const state={};
-// mutations：唯一修改state的地方
-const mutations={};
-// actions：处理action，梳理逻辑业务，也可以处理异步
-const actions={};
-// getters：可以理解为计算属性，用于简化仓库数据，让组件获取仓库的数据变得更加方便
+import {reqCategoryList} from '@/api/index';
+
+const state={
+    // state的初始值根据服务器返回的值确定，返回的是数组，初始值就是数组；返回的是对象，初始值就是对象。
+    categoryList:[],
+};
+
+const mutations={
+    CATEGORYLIST(state,categoryList){
+        state.categoryList = categoryList;
+    }
+};
+
+const actions={
+    // 通过API里面的接口函数调用，向服务器发送请求，获取服务器的数据
+    async categoryList({commit}){
+        let result = await reqCategoryList();
+        // 接收成功结果，需要解构提交数据，让mutation修改数据
+        // console.log(result)
+
+        if(result.code == 200){
+            commit('CATEGORYLIST',result.data)
+        }
+
+
+    }
+};
+
 const getters = {};
 
 

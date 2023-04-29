@@ -3,7 +3,7 @@ import App from './App.vue'
 
 // 引入和注册全局组件
 //三级联动全局组件
-import TypeNav from './pages/Home/TypeNav';
+import TypeNav from '@/components/TypeNav';
 // 注册全局组件
 // 有两个参数：组件名字和导入的组件名字
 Vue.component(TypeNav.name,TypeNav)
