@@ -21,9 +21,9 @@ let originReplace = VueRouter.prototype.replace
 // 三个参数：1：push跳转的位置，2：成功回调，3：失败回调
 VueRouter.prototype.push = function(location,resolve,reject){
     if(resolve && reject){
-        originPush.call(this,location,resolve,reject)
+        originPush.call(this, location, resolve, reject)
     }else{
-        originPush.call(this.location,()=>{},()=>{})
+        originPush.call(this, location, () => { }, () => { })
     }
 }
 
@@ -77,5 +77,8 @@ export default new VueRouter({
             path:'*',
             redirect:'/home'
         }
+          //  路由重定向，设置进入页面默认为home
+
+  
     ]
 })
