@@ -2,45 +2,62 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-
       <!-- 事件委派 -->
-      <div @mouseleave="leaveIndex()">
+      <div @mouseleave="leaveIndex" @mouseenter="entershow">
         <h2 class="all">全部商品分类</h2>
-        <div class="sort">
-          <div class="all-sort-list2" @click="goSearch">
-            <div
-              class="item"
-              v-for="(c1, index) in categoryList"
-              :key="c1.categoryId"
-              :class="{ cur: curIndex == index }"
-            >
-              <h3 @mouseenter="changeIndex(index)" >
-                <a :data-categoryName='c1.categoryName' :data-category1Id="c1.categoryId">{{ c1.categoryName }}</a>
-              </h3>
-              <div class="item-list clearfix" :style="{display:curIndex==index ? 'block' : 'none'}">
+        <!-- 过渡动画 -->
+        <transition name="sort">
+          <div class="sort" v-show="show">
+            <div class="all-sort-list2" @click="goSearch">
+              <div
+                class="item"
+                v-for="(c1, index) in categoryList"
+                :key="c1.categoryId"
+                :class="{ cur: curIndex == index }"
+              >
+                <h3 @mouseenter="changeIndex(index)">
+                  <a
+                    :data-categoryName="c1.categoryName"
+                    :data-category1Id="c1.categoryId"
+                    >{{ c1.categoryName }}</a
+                  >
+                </h3>
                 <div
-                  class="subitem"
-                  v-for="(c2, index) in c1.categoryChild"
-                  :key="c2.categoryId"
+                  class="item-list clearfix"
+                  :style="{ display: curIndex == index ? 'block' : 'none' }"
                 >
-                  <dl class="fore">
-                    <dt>
-                      <a :data-categoryName='c2.categoryName' :data-category2Id="c2.categoryId">{{ c2.categoryName }}</a>
-                    </dt>
-                    <dd>
-                      <em
-                        v-for="(c3, index) in c2.categoryChild"
-                        :key="c3.categoryId"
-                      >
-                        <a :data-categoryName='c3.categoryName' :data-category3Id="c3.categoryId">{{ c3.categoryName }}</a>
-                      </em>
-                    </dd>
-                  </dl>
+                  <div
+                    class="subitem"
+                    v-for="(c2, index) in c1.categoryChild"
+                    :key="c2.categoryId"
+                  >
+                    <dl class="fore">
+                      <dt>
+                        <a
+                          :data-categoryName="c2.categoryName"
+                          :data-category2Id="c2.categoryId"
+                          >{{ c2.categoryName }}</a
+                        >
+                      </dt>
+                      <dd>
+                        <em
+                          v-for="(c3, index) in c2.categoryChild"
+                          :key="c3.categoryId"
+                        >
+                          <a
+                            :data-categoryName="c3.categoryName"
+                            :data-category3Id="c3.categoryId"
+                            >{{ c3.categoryName }}</a
+                          >
+                        </em>
+                      </dd>
+                    </dl>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </transition>
       </div>
 
       <nav class="nav">
@@ -69,12 +86,17 @@ export default {
     return {
       // 当前所选的一级分类的下标
       curIndex: -1,
+      show: true,
     };
   },
   mounted() {
     //通过vuex发送请求，获取数据，存储在仓库中
     // 派发仓库action
     this.$store.dispatch("categoryList");
+
+    if (this.$route.name == "search") {
+      this.show = false;
+    }
   },
   computed: {
     ...mapState({
@@ -87,39 +109,45 @@ export default {
   },
   methods: {
     // 鼠标进入修改下标curIndex
-    changeIndex: throttle(function(index) {
+    changeIndex: throttle(function (index) {
       this.curIndex = index;
-    },50),
+    }, 50),
     //鼠标移除后，清除背景颜色
     leaveIndex() {
       this.curIndex = -1;
+      if (this.$route.name != "home") {
+        this.show = false;
+      }
     },
-    goSearch(event){
+    // 鼠标移入事件
+    entershow() {
+      this.show = true;
+    },
+    goSearch(event) {
       // 获取鼠标事件目标节点
       let targetNode = event.target;
       // 解构设置好的自定义属性
-      let {categoryname,category1id,category2id,category3id} = targetNode.dataset;
+      let { categoryname, category1id, category2id, category3id } =
+        targetNode.dataset;
       // 测试
       // console.log(categoryname,category1id,category2id,category3id)
       // 确定获得的是a标签
-      if(categoryname){
+      if (categoryname) {
         // 处理跳转参数
-        let location = {name:'search'};
-        let query = {categoryName: categoryname};
+        let location = { name: "search" };
+        let query = { categoryName: categoryname };
 
-        if(category1id){
-          query.category1Id = category1id
-        }else if(category2id){
-          query.category2Id = category2id
-        }else if(category3id){
-          query.category3Id = category3id
+        if (category1id) {
+          query.category1Id = category1id;
+        } else if (category2id) {
+          query.category2Id = category2id;
+        } else if (category3id) {
+          query.category3Id = category3id;
         }
         // 整理跳转参数
         location.query = query;
         this.$router.push(location);
       }
-      
-   
     },
   },
 };
@@ -235,13 +263,27 @@ export default {
               }
             }
           }
-
         }
         .cur {
           background-color: skyblue;
         }
       }
     }
+
+    // 过渡动画样式
+    // 过渡动画进入的开始状态
+    .sort-enter{
+      height:0px;
+    }
+    // 过渡动画进入的结束状态
+    .sort-enter-to{
+      height: 461px;
+    }
+    // 定义动画的时间，速率等
+    .sort-eter-active{
+      transition: all .5s linear;
+    }
+
   }
 }
 </style>
