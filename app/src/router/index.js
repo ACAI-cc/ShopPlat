@@ -65,7 +65,7 @@ export default new VueRouter({
             }
         },
         {
-            path:"/search",
+            path:"/search/:keyword",
             name:'search',
             component:Search,
             meta:{

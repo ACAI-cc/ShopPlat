@@ -142,9 +142,14 @@ export default {
         } else if (category3id) {
           query.category3Id = category3id;
         }
-        // 整理跳转参数
+        // 整理跳转参数,合并参数
+        if(this.$route.params){
+          location.params = this.$route.params;
+          
+        }
         location.query = query;
-        this.$router.push(location);
+          this.$router.push(location);
+        
       }
     },
   },

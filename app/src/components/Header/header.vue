@@ -29,10 +29,9 @@
     <!--头部第二行 搜索区域-->
     <div class="bottom">
       <h1 class="logoArea">
-        <router-link to="/home" class="logo" >
+        <router-link to="/home" class="logo">
           <img src="./images/logo.png" alt="" />
-        </router-link>  
-      
+        </router-link>
       </h1>
       <div class="searchArea">
         <form action="###" class="searchForm">
@@ -40,8 +39,13 @@
             type="text"
             id="autocomplete"
             class="input-error input-xxlarge"
+            v-model="keyword"
           />
-          <button @click="goSearch" class="sui-btn btn-xlarge btn-danger" type="button">
+          <button
+            @click="goSearch"
+            class="sui-btn btn-xlarge btn-danger"
+            type="button"
+          >
             搜索
           </button>
         </form>
@@ -53,11 +57,25 @@
 <script>
 export default {
   name: "",
+  data(){
+    return{
+      keyword:"",
+    }
+  },
   methods: {
     // 编程式导航(搜索按钮的回调函数)：跳转到search页面
-    goSearch(){
-      this.$router.replace('/search');
-    }
+    goSearch() { 
+      if (this.$route.query) {
+        let location = {
+          name: "search",
+          params: { keyword: this.keyword},
+        };
+        location.query = this.$route.query;   
+        console.log(this.$route.params.keyword) 
+        this.$router.push(location);   
+      }
+      
+    },
   },
 };
 </script>
