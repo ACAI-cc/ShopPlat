@@ -78,7 +78,7 @@
 // 引入获取仓库数据的辅助函数
 import { mapState } from "vuex";
 import throttle from "lodash/throttle";
-import router from "@/router";
+
 
 export default {
   name: "TypeNav",

@@ -14,9 +14,10 @@ import router from '@/router';
 // 引入vuex仓库
 import store from '@/store';
 
-// test
-import { reqCategoryList} from "@/api/index.js";
-reqCategoryList();
+// 引入mockserve.js的mock数据文件
+import '@/mock/mockServe';
+
+
 
 Vue.config.productionTip = false
 

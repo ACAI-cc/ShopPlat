@@ -92,8 +92,26 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "ListContainer",
+  data() {
+    return {};
+  },
+  components: {},
+  created() {},
+  mounted() {
+    this.$store.dispatch("bannerList");
+  },
+  computed: {
+    ...mapState({
+      bannerList: (state) => {
+        return state.home.bannerList;
+      },
+    })
+  },
+  methods: {},
 };
 </script>
 
