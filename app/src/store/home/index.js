@@ -3,7 +3,7 @@
 import {reqCategoryList} from '@/api/index';
 
 // mock请求
-import {reqBannerList} from '@/api/index';
+import {reqBannerList, reqFloorList} from '@/api/index';
 
 const state={
     // state的初始值根据服务器返回的值确定，返回的是数组，初始值就是数组；返回的是对象，初始值就是对象。 
@@ -11,6 +11,7 @@ const state={
 
     // mock数据
     bannerList:[],
+    floorList:[],
 };
 
 const mutations={
@@ -22,7 +23,13 @@ const mutations={
     // mock数据
     BANNERLIST(state,bannerList){
         state.bannerList = bannerList;
+    },
+
+    FLOORLIST(state,floorList){
+        state.floorList = floorList;
     }
+
+
 
 };
 
@@ -45,9 +52,17 @@ const actions={
     async bannerList({commit}){
         let bannerResult = await reqBannerList();
 
-        console.log(bannerResult);
+        // console.log(bannerResult);
         if(bannerResult.code == 200){
             commit('BANNERLIST',bannerResult.data)
+        }
+    },
+
+    async floorList({commit}){
+        let floorResult = await reqFloorList();
+        // console.log(floorResult);
+        if(floorResult.code == 200){
+            commit('FLOORLIST',floorResult.data)
         }
     }
 };

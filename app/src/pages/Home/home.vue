@@ -6,7 +6,8 @@
     <Recommend/>
     <Rank/>
     <Like/>
-    <Floor/>
+    <!-- 父子通信:已经挂在完毕，传递数据 -->
+    <Floor v-for="(floor) in floorList" :key='floor.id' :list="floor"/>
     <Brand/>
   </div>
 </template>
@@ -18,6 +19,7 @@ import Rank from "@/pages/Home/Rank";
 import Like from "@/pages/Home/Like";
 import Floor from "@/pages/Home/Floor";
 import Brand from "@/pages/Home/Brand";
+import { mapState } from "vuex";
 
 
 export default {
@@ -30,6 +32,18 @@ export default {
     Floor,
     Brand,
 
+  },
+  
+  mounted() {
+    // 在home页面派发floor的数据，可以遍历floorList出现两个floor组件
+    this.$store.dispatch('floorList')
+  },
+  computed: {
+    ...mapState({
+      floorList:(state)=>{
+        return state.home.floorList;
+      }
+    })
   },
 
 }

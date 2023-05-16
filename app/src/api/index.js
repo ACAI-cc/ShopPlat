@@ -24,3 +24,11 @@ export const reqBannerList = () =>{
         method:"GET",
     })
 }
+
+// 获取floor数据
+export const reqFloorList = () =>{
+    return mockRequests({
+        url:'/floor',
+        method:'GET',
+    })
+}
