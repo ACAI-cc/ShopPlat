@@ -45,16 +45,18 @@
           <!-- 产品列表 -->
           <div class="goods-list">
             <ul class="yui3-g">
-              <li
+             
+                <li
                 class="yui3-u-1-5"
                 v-for="(goods, index) in goodsList"
                 :key="goods.id"
+               
               >
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank">
+                    <router-link :to="`/detail/${goods.id}`" >
                       <img :src="goods.defaultImg" />
-                    </a>
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -65,7 +67,7 @@
                   <div class="attr">
                     <a
                       target="_blank"
-                      href="item.html"
+                     
                       title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
                       >{{ goods.title }}</a
                     >
@@ -86,6 +88,7 @@
                   </div>
                 </div>
               </li>
+             
             </ul>
           </div>
           <!-- 分页器 -->
@@ -254,6 +257,7 @@ export default {
     },
 
   
+
     // 浏览器回退按钮
     cancel(){
       this.$router.go(-1)

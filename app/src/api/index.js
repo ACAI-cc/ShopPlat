@@ -27,6 +27,14 @@ export const reqSearchInfo = (params) => {
 
 }
 
+// 商品详情页 请求地址/api/item/{ skuId } GET
+export const reqDetailInfo = (skuId) =>{
+    return requests({
+        url:`/item/${skuId}`,
+        method:"GET",
+    })
+}
+
 
 // mock数据获取
 // 获取banner（轮播图）数据

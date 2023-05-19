@@ -86,14 +86,14 @@ export default {
     return {
       // 当前所选的一级分类的下标
       curIndex: -1,
-      show: true,
+      show: false,
     };
   },
   mounted() {
 
 
-    if (this.$route.name == "search") {
-      this.show = false;
+    if (this.$route.name == "home" ) {
+      this.show = true;
     }
   },
   computed: {
