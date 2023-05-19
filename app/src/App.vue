@@ -23,7 +23,12 @@ export default {
     // 通过vuex发送请求，获取数据，存储在仓库中
     // 派发仓库action
     this.$store.dispatch("categoryList");
-  }
+
+    
+  },
+  methods: {
+   
+  },
 
 }
 </script>

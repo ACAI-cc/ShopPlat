@@ -62,16 +62,20 @@ export default {
       keyword:"",
     }
   },
+  mounted() {
+    this.$bus.$on('clear',()=>{
+      this.keyword='';
+    })
+  },
   methods: {
     // 编程式导航(搜索按钮的回调函数)：跳转到search页面
     goSearch() { 
       if (this.$route.query) {
         let location = {
           name: "search",
-          params: { keyword: this.keyword},
+          params: { keyword: this.keyword || undefined},
         };
         location.query = this.$route.query;   
-        console.log(this.$route.params.keyword) 
         this.$router.push(location);   
       }
       
