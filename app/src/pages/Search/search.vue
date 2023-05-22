@@ -135,14 +135,6 @@ export default {
   mounted() {
     // 获取数据
     this.getData()
-
-    //判断浏览器是否支持popstate
-    // history允许访问浏览器的曾经在标签页或者框架里访问的会话历史记录。
-    //  history.pushState方法向浏览器的会话历史栈增加了一个条目。
-     if(window.history && window.history.pushState){
-      history.pushState(null,null,document.URL);
-      window.addEventListener('popstate',this.cancel,false);
-    }
   },
   computed: {
     // getter中穿的是数组，因为getter中计算出来不分仓库模块
@@ -258,10 +250,7 @@ export default {
 
   
 
-    // 浏览器回退按钮
-    cancel(){
-      this.$router.go(-1)
-    }
+   
   },
 };
 </script>

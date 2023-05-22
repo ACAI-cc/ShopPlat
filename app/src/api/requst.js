@@ -5,7 +5,8 @@ import axios from "axios";
 import nProgress from "nprogress";
 // 导入进度条样式
 import "nprogress/nprogress.css";
-
+// 导入当前模块store
+import store from '@/store';
 
 
 // 利用axios对象的方法create，去创建一个axios实例
@@ -22,6 +23,12 @@ const requests = axios.create({
 
 // 请求拦截器
 requests.interceptors.request.use(config => {
+    if(store.state.detail.uuid_token){
+        // 通过请求头传递临时用户身份
+        // 添加请求头字段，字段名需和后端一同确定
+        config.headers.userTempId = store.state.detail.uuid_token
+    }
+
     // 进度条开始动
     nProgress.start();
     return config;

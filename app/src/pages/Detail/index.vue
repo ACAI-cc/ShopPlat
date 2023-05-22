@@ -92,7 +92,12 @@
                   :class="{ active: spuSaleAttrValue.isChecked == 1 }"
                   v-for="spuSaleAttrValue in spuSaleAttr.spuSaleAttrValueList"
                   :key="spuSaleAttrValue.id"
-                  @click="changeActive(spuSaleAttrValue,spuSaleAttr.spuSaleAttrValueList)"
+                  @click="
+                    changeActive(
+                      spuSaleAttrValue,
+                      spuSaleAttr.spuSaleAttrValueList
+                    )
+                  "
                 >
                   {{ spuSaleAttrValue.saleAttrValueName }}
                 </dd>
@@ -101,12 +106,22 @@
 
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input
+                  autocomplete="off"
+                  class="itxt"
+                  v-model="skuNum"
+                  @change="changeSkuNum"
+                />
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a
+                  href="javascript:"
+                  class="mins"
+                  @click="skuNum > 1 ? skuNum-- : 1"
+                  >-</a
+                >
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a @click="updateShopCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -345,13 +360,18 @@
 </template>
 
 <script>
+import { onUpdated } from "vue";
 import ImageList from "./ImageList/ImageList";
 import Zoom from "./Zoom/Zoom";
 import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "Detail",
-
+  data() {
+    return {
+      skuNum: 1,
+    };
+  },
   components: {
     ImageList,
     Zoom,
@@ -369,30 +389,48 @@ export default {
     // 派发小车间
     this.$store.dispatch("goodsInfoList", this.$route.params.skuId);
 
-    //判断浏览器是否支持popstate
-    // history允许访问浏览器的曾经在标签页或者框架里访问的会话历史记录。
-    //  history.pushState方法向浏览器的会话历史栈增加了一个条目。
-    if (window.history && window.history.pushState) {
-      history.pushState(null, null, document.URL);
-      window.addEventListener("popstate", this.cancel, false);
-    }
   },
   methods: {
     // 商品属性选择
-    changeActive(saleAttrValueName,arr) {
+    changeActive(saleAttrValueName, arr) {
       // 遍历全部售卖属性值，ischecked置零
-      arr.forEach(item => {
+      arr.forEach((item) => {
         item.isChecked = 0;
       });
       // 点击的置一，显示active类名。（数组排他）
-      saleAttrValueName.isChecked = 1
-
+      saleAttrValueName.isChecked = 1;
+    },
+    changeSkuNum(event) {
+      // 获取文本内容，包含非数字的*1=NaN--排除了非法的数据
+      let value = event.target.value * 1;
+      if (isNaN(value) || value < 1) {
+        this.skuNum = 1;
+      } else {
+        this.skuNum = parseInt(value);
+      }
     },
 
-    // 浏览器回退按钮
-    cancel() {
-      this.$router.go(-1);
+    // 带参数跳转
+    async updateShopCart() {
+      // 派发车间
+      try {
+        await this.$store.dispatch("UpdateShopCartNum", {
+          skuId: this.$route.params.skuId,
+          skuNum: this.skuNum,
+        });
+        // 路由跳转,并将产品信息带给addcartsuccess
+        // 跳转只携带 skuNum 不携带 skuInfo，将skuInfo放到本地中存储
+        sessionStorage.setItem("SKUINFO",JSON.stringify(this.skuInfo))
+        this.$router.push({
+          name: "addcartsuccess",
+          query: { skuNum: this.skuNum },
+        });
+      } catch (error) {
+        alert("跳转失败"), console.log(error);
+      }
     },
+
+   
   },
 };
 </script>

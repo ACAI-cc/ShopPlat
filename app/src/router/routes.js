@@ -5,6 +5,8 @@ import Login from '@/pages/Login/login.vue'
 import Register from '@/pages/Register/register.vue'
 import Search from '@/pages/Search/search.vue'
 import Detail from '@/pages/Detail/index.vue'
+import AddCartSuccess from '@/pages/AddCartSuccess/index.vue'
+import ShopCart from '@/pages/ShopCart/index.vue'
 
 
 export default [
@@ -39,10 +41,28 @@ export default [
         meta:{
             show:true,
         }
-    },{
+    },
+    {
         path:"/detail/:skuId?",
         name:'detail',
         component:Detail,
+        meta:{
+            show:true,
+        }
+    },
+
+    {
+        path:"/addcartsuccess",
+        name:'addcartsuccess',
+        component:AddCartSuccess,
+        meta:{
+            show:true,
+        }
+    },
+    {
+        path:"/shopcart",
+        name:'shopcart',
+        component:ShopCart,
         meta:{
             show:true,
         }
