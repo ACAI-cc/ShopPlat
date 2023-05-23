@@ -79,79 +79,87 @@ export const reqGetCode = (phone) => {
 }
 
 // 用户注册 URL：/api/user/passport/register POST 要携带phone password code
-export const reqRegister = (data) =>{
+export const reqRegister = (data) => {
     return requests({
-        url:"/user/passport/register",
+        url: "/user/passport/register",
         data,//key,value一致
-        method:'POST'
+        method: 'POST'
     })
 }
 
 // 用户登录 URL:/api/user/passport/login POST 携带参数：phone password
-export const reqLogin = (data) =>{
-    return requests ({
-        url:"/user/passport/login",
+export const reqLogin = (data) => {
+    return requests({
+        url: "/user/passport/login",
         data,
-        method:'POST'
+        method: 'POST'
     })
 }
 
 // 获取用户信息 URL：/user/passport/auth/getUserInfo token通过请求头发送
-export const reqUserInfo = ()=>{
+export const reqUserInfo = () => {
     return requests({
-        url:'/user/passport/auth/getUserInfo',
-        method:'GET'
+        url: '/user/passport/auth/getUserInfo',
+        method: 'GET'
     })
 }
 
 // 退出登入 URL:/api/user/passport/logout GET
-export const reqLogout = ()=>{
+export const reqLogout = () => {
     return requests({
-        url:'/user/passport/logout',
-        method:'GET'
+        url: '/user/passport/logout',
+        method: 'GET'
     })
 }
 
 // 获取用户信息 URL /api/user/userAddress/auth/findUserAddressList get
-export const reqAddressInfo = ()=>{
+export const reqAddressInfo = () => {
     return requests({
-        url:'user/userAddress/auth/findUserAddressList',
-        method:'GET'
+        url: 'user/userAddress/auth/findUserAddressList',
+        method: 'GET'
     })
 }
 
 // 获取交易页订单信息 URL：/api/order/auth/trade GET
-export const reqOrderInfo = () =>{
+export const reqOrderInfo = () => {
     return requests({
-        url:'/order/auth/trade',
-        method:'GET'
+        url: '/order/auth/trade',
+        method: 'GET'
     })
 }
 
 // 提交订单 URL:/api/order/auth/submitOrder?tradeNo={tradeNo} POST
-export const reqSubmitOrder = (tradeNo,data)=>{
+export const reqSubmitOrder = (tradeNo, data) => {
     return requests({
-        url:`/order/auth/submitOrder?tradeNo=${tradeNo}`,
+        url: `/order/auth/submitOrder?tradeNo=${tradeNo}`,
         data,
-        method:'POST'
+        method: 'POST'
     })
 }
 
 // 获取订单信息 URL：/api/payment/weixin/createNative/{orderId} GET
-export const reqPayInfo = (orderId) =>{
+export const reqPayInfo = (orderId) => {
     return requests({
-        url:`/payment/weixin/createNative/${orderId}`,
-        method:'GET'
+        url: `/payment/weixin/createNative/${orderId}`,
+        method: 'GET'
     })
 }
 
 // 查询支付状态 URL:/api/payment/weixin/queryPayStatus/{orderId} GET
-export const reqPayStatus =(orderId)=>{
+export const reqPayStatus = (orderId) => {
     return requests({
-        url:`/payment/weixin/queryPayStatus/${orderId}`,
-        method:'GET'
+        url: `/payment/weixin/queryPayStatus/${orderId}`,
+        method: 'GET'
     })
 
+}
+
+// 获取个人中心订单 URL:/api/order/auth/{page}/{limit} GET
+export const reqMyOrderList = (page, limit) => {
+    return requests({
+        url: `/order/auth/${page}/${limit}`,
+        method: 'get'
+    });
 }
 
 

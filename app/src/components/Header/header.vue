@@ -20,7 +20,7 @@
           </p>
         </div>
         <div class="typeList">
-          <a href="###">我的订单</a>
+          <a @click="goCenter">我的订单</a>
           <a @click="goShopCart">我的购物车</a>
           <a href="###">我的尚品汇</a>
           <a href="###">尚品汇会员</a>
@@ -89,6 +89,9 @@ export default {
     },
     goShopCart(){
       this.$router.push('/shopcart')
+    },
+    goCenter(){
+      this.$router.push('/center')
     },
 
     // 退出登入
