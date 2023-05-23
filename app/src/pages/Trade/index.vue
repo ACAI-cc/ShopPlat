@@ -39,22 +39,26 @@
         <h5>商品清单</h5>
         <ul
           class="list clearFix"
-          v-for="(order) in orderInfo.detailArrayList"
+          v-for="order in orderInfo.detailArrayList"
           :key="order.skuId"
         >
           <li>
-            <img :src="order.imgUrl" alt="" style="height: 100px;widows: 100px;"/>
+            <img
+              :src="order.imgUrl"
+              alt=""
+              style="height: 100px; widows: 100px"
+            />
           </li>
           <li>
             <p>
-              {{order.skuName}}
+              {{ order.skuName }}
             </p>
             <h4>7天无理由退货</h4>
           </li>
           <li>
-            <h3>￥{{order.orderPrice}}</h3>
+            <h3>￥{{ order.orderPrice }}</h3>
           </li>
-          <li>X{{order.skuNum}}</li>
+          <li>X{{ order.skuNum }}</li>
           <li>有货</li>
         </ul>
       </div>
@@ -76,8 +80,11 @@
     <div class="money clearFix">
       <ul>
         <li>
-          <b><i>{{ orderInfo.totalNum }}</i>件商品，总商品金额</b>
-          <span>¥{{orderInfo.totalAmount}}</span>
+          <b
+            ><i>{{ orderInfo.totalNum }}</i
+            >件商品，总商品金额</b
+          >
+          <span>¥{{ orderInfo.totalAmount }}</span>
         </li>
         <li>
           <b>返现：</b>
@@ -90,7 +97,9 @@
       </ul>
     </div>
     <div class="trade">
-      <div class="price">应付金额:　<span>¥{{orderInfo.totalAmount}}</span></div>
+      <div class="price">
+        应付金额:　<span>¥{{ orderInfo.totalAmount }}</span>
+      </div>
       <div class="receiveInfo">
         寄送至:
         <span>{{ userDefaultAddress.fullAddress }}</span>
@@ -99,30 +108,36 @@
       </div>
     </div>
     <div class="sub clearFix">
-      <router-link class="subBtn" to="/pay">提交订单</router-link>
+      <a class="subBtn" @click="submitOrder">提交订单</a>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+
 export default {
   name: "Trade",
   data() {
     return {
       // 收集买家留言
-      msg:''
-    }
+      msg: "",
+      // 订单号
+      orderId:'',
+    };
   },
   mounted() {
+    // 派发action
     this.$store.dispatch("getsUserAddress");
     this.$store.dispatch("getOrderInfo");
   },
   computed: {
+    // 获取仓库数据
     ...mapState({
       addressInfo: (state) => state.trade.address,
       orderInfo: (state) => state.trade.orderInfo,
     }),
+    // 计算默认地址信息
     userDefaultAddress() {
       // find查找数组中符合条件的元素返回
       // 至少是个空对象
@@ -135,6 +150,29 @@ export default {
       // 排他
       addressInfo.forEach((item) => (item.isDefault = 0));
       address.isDefault = 1;
+    },
+    // 提交订单
+    async submitOrder() {
+      let { tradeNo } = this.orderInfo;
+      let data = {
+        consignee: this.userDefaultAddress.consignee,
+        consigneeTel: this.userDefaultAddress.phoneNum,
+        deliveryAddress: this.userDefaultAddress.fullAddress,
+        paymentWay: "ONLINE",
+        orderComment: this.msg,
+        orderDetailList: this.orderInfo.detailArrayList
+      };
+      let result = await this.$API.reqSubmitOrder(tradeNo,data);
+      // console.log(result);
+      // 提交订单成功
+      if (result.code == 200) {
+        this.orderId = result.data;
+        this.$router.push("/pay?orderId="+this.orderId);
+
+      } else {
+        
+      }
+      
     },
   },
 };

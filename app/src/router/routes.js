@@ -8,6 +8,8 @@ import Detail from '@/pages/Detail/index.vue'
 import AddCartSuccess from '@/pages/AddCartSuccess/index.vue'
 import ShopCart from '@/pages/ShopCart/index.vue'
 import Trade from '@/pages/Trade/index.vue'
+import Pay from '@/pages/Pay/index.vue'
+import PaySuccess from '@/pages/PaySuccess/index.vue'
 
 
 export default [
@@ -72,6 +74,22 @@ export default [
         path:"/trade",
         name:'trade',
         component:Trade,
+        meta:{
+            show:true,
+        }
+    },
+    {
+        path:"/pay",
+        name:'pay',
+        component:Pay,
+        meta:{
+            show:true,
+        }
+    },
+    {
+        path:"/paysuccess",
+        name:'paysuccess',
+        component:PaySuccess,
         meta:{
             show:true,
         }
