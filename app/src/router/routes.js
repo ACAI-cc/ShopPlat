@@ -1,25 +1,13 @@
 
-// 引入路由组件
-import Home from '@/pages/Home/home.vue'
-import Login from '@/pages/Login/index.vue'
-import Register from '@/pages/Register/index.vue'
-import Search from '@/pages/Search/search.vue'
-import Detail from '@/pages/Detail/index.vue'
-import AddCartSuccess from '@/pages/AddCartSuccess/index.vue'
-import ShopCart from '@/pages/ShopCart/index.vue'
-import Trade from '@/pages/Trade/index.vue'
-import Pay from '@/pages/Pay/index.vue'
-import PaySuccess from '@/pages/PaySuccess/index.vue'
-import Center from '@/pages/Center/index.vue'
-// 引入二级路由组件
-import myOrder from '@/pages/Center/myOrder/index.vue';
-import groupOrder from '@/pages/Center/groupOrder/index.vue';
+//传统的引入一上来直接加载
+//路由懒加载:不是一上来就加载，是需要或者用户跳到组件时才加载组件
+
 
 export default [
     {
         path: "/home",
         name: 'home',
-        component: Home,
+        component:()=>import ('@/pages/home'),
         meta: {
             show: true,
         }
@@ -27,7 +15,7 @@ export default [
     {
         path: "/login",
         name: 'login',
-        component: Login,
+        component: ()=>import('@/pages/Login'),
         meta: {
             show: false,
         }
@@ -35,7 +23,7 @@ export default [
     {
         path: "/register",
         name: 'register',
-        component: Register,
+        component: ()=>('@/pages/Register'),
         meta: {
             show: false,
         }
@@ -43,7 +31,7 @@ export default [
     {
         path: "/search/:keyword?",
         name: 'search',
-        component: Search,
+        component:()=>('@/pages/Search'),
         meta: {
             show: true,
         }
@@ -51,7 +39,7 @@ export default [
     {
         path: "/detail/:skuId?",
         name: 'detail',
-        component: Detail,
+        component: ()=>('@/pages/Detail'),
         meta: {
             show: true,
         }
@@ -60,7 +48,7 @@ export default [
     {
         path: "/addcartsuccess",
         name: 'addcartsuccess',
-        component: AddCartSuccess,
+        component: ()=>('@/pages/AddCartSuccess'),
         meta: {
             show: true,
         }
@@ -68,7 +56,7 @@ export default [
     {
         path: "/shopcart",
         name: 'shopcart',
-        component: ShopCart,
+        component: ()=>('@/pages/ShopCart'),
         meta: {
             show: true,
         }
@@ -76,23 +64,43 @@ export default [
     {
         path: "/trade",
         name: 'trade',
-        component: Trade,
+        component: ()=>('@/pages/Trade'),
         meta: {
             show: true,
+        },
+        beforeEnter(to, from, next) {
+            // 跳转交易页，必须从购物车跳转
+            if (from.path === '/shopcart') {
+                next()
+            } else {
+                next(false)
+            }
         }
     },
     {
         path: "/pay",
         name: 'pay',
-        component: Pay,
+        component: ()=>('@/pages/Pay'),
         meta: {
             show: true,
+        },
+        // 将query参数映射成props传递给路由组件
+        props: route => ({ orderId: route.query.orderId }),
+
+        /* 只能从交易界面, 才能跳转到支付界面 */
+        beforeEnter(to, from, next) {
+            if (from.path === '/trade') {
+                next()
+            } else {
+                next(false)
+            }
         }
+
     },
     {
         path: "/paysuccess",
         name: 'paysuccess',
-        component: PaySuccess,
+        component: ()=>('@/pages/PaySuccess'),
         meta: {
             show: true,
         }
@@ -100,23 +108,23 @@ export default [
     {
         path: "/center",
         name: 'center',
-        component: Center,
+        component: ()=>('@/pages/Center'),
         meta: {
             show: true,
         },
         children: [
             {
                 path: 'myorder',
-                component: myOrder,
+                component: ()=>('@/pages/myOrder'),
             },
             {
                 path: 'grouporder',
-                component: groupOrder
+                component: ()=>('@/pages/groupOrder')
             },
             // center重定向
             {
-                path:'/center',
-                redirect:'/center/myorder'
+                path: '/center',
+                redirect: '/center/myorder'
             }
         ]
     },

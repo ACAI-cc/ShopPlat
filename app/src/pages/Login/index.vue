@@ -87,8 +87,9 @@
       try {
         const {phone,password} = this;
         (phone && password) && await this.$store.dispatch('userLogin',{phone,password});
-        // 登入成功跳转到home
-        this.$router.push('/home');
+        // 登入成功，有query跳转到目的地否则跳转到首页
+        let toPath = this.$route.query.redirect||"/home";
+        this.$router.push(toPath);
 
       } catch (error) {
         alert(error.message);

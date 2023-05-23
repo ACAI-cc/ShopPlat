@@ -34,6 +34,18 @@ Vue.prototype.$alert = MessageBox.alert;
 
 Vue.config.productionTip = false
 
+// 引入懒加载插件
+import VueLazyload from 'vue-lazyload'
+// 引入图片
+import aoteman from '@/assets/aoteman.jpg'
+Vue.use(VueLazyload, {
+  //懒加载时的默认图
+  loading: aoteman
+})
+
+//引入表单校验插件--main.js
+import '@/plugins/validate'
+
 new Vue({
   render: h => h(App),
 
