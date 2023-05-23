@@ -36,7 +36,8 @@ export default {
   
   mounted() {
     // 在home页面派发floor的数据，可以遍历floorList出现两个floor组件
-    this.$store.dispatch('floorList')
+    this.$store.dispatch('floorList');
+  
   },
   computed: {
     ...mapState({

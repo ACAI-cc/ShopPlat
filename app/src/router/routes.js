@@ -1,12 +1,13 @@
 
 // 引入路由组件
 import Home from '@/pages/Home/home.vue'
-import Login from '@/pages/Login/login.vue'
-import Register from '@/pages/Register/register.vue'
+import Login from '@/pages/Login/index.vue'
+import Register from '@/pages/Register/index.vue'
 import Search from '@/pages/Search/search.vue'
 import Detail from '@/pages/Detail/index.vue'
 import AddCartSuccess from '@/pages/AddCartSuccess/index.vue'
 import ShopCart from '@/pages/ShopCart/index.vue'
+import Trade from '@/pages/Trade/index.vue'
 
 
 export default [
@@ -63,6 +64,14 @@ export default [
         path:"/shopcart",
         name:'shopcart',
         component:ShopCart,
+        meta:{
+            show:true,
+        }
+    },
+    {
+        path:"/trade",
+        name:'trade',
+        component:Trade,
         meta:{
             show:true,
         }

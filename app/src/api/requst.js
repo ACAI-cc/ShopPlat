@@ -28,6 +28,10 @@ requests.interceptors.request.use(config => {
         // 添加请求头字段，字段名需和后端一同确定
         config.headers.userTempId = store.state.detail.uuid_token
     }
+    // 判断携带token
+    if (store.state.user.token) {
+        config.headers.token = store.state.user.token;
+    }
 
     // 进度条开始动
     nProgress.start();
