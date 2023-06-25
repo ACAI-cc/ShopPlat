@@ -1,4 +1,3 @@
-
 //传统的引入一上来直接加载
 //路由懒加载:不是一上来就加载，是需要或者用户跳到组件时才加载组件
 
@@ -7,7 +6,7 @@ export default [
     {
         path: "/home",
         name: 'home',
-        component:()=>import ('@/pages/home'),
+        component:()=>import ('@/pages/Home'),
         meta: {
             show: true,
         }

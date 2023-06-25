@@ -23,7 +23,7 @@ import { mapState } from "vuex";
 
 
 export default {
-  name:"Home",
+  name:"home",
   components:{    
     ListContainer,
     Recommend,
