@@ -8,6 +8,9 @@
   
 </template>
 
+<!-- 自己账号 ：13101425322 密码： 123456
+    有数据的：13700000000 密码：111111
+-->
 <script>
 import Header from './components/Header/header.vue'
 import Footer from './components/Footer/footer.vue'

@@ -11,14 +11,15 @@
 
             <!-- 声明式导航：使用to跳转 -->
             <router-link to="/login">登录</router-link>
-            <router-link to="/register" class="register">免费注册</router-link>
+            <!-- <router-link to="/register" class="register">免费注册</router-link> -->
+            <span @click="goRegister" class="register">免费注册</span>
           </p>
           <p v-else>
             <a>{{ userName }}</a>
 
             <a class="register" @click="logout">退出登入</a>
           </p>
-        </div>
+        </div> 
         <div class="typeList">
           <a @click="goCenter">我的订单</a>
           <a @click="goShopCart">我的购物车</a>
@@ -92,6 +93,12 @@ export default {
     },
     goCenter(){
       this.$router.push('/center')
+    },
+    
+    goRegister(){
+      console.log("111");
+      this.$router.push('/register')
+     
     },
 
     // 退出登入

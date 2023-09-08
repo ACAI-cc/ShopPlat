@@ -22,7 +22,7 @@ export default [
     {
         path: "/register",
         name: 'register',
-        component: ()=>('@/pages/Register'),
+        component: ()=>import('@/pages/Register'),
         meta: {
             show: false,
         }
@@ -30,7 +30,7 @@ export default [
     {
         path: "/search/:keyword?",
         name: 'search',
-        component:()=>('@/pages/Search'),
+        component:()=>import('@/pages/Search'),
         meta: {
             show: true,
         }
@@ -38,7 +38,7 @@ export default [
     {
         path: "/detail/:skuId?",
         name: 'detail',
-        component: ()=>('@/pages/Detail'),
+        component: ()=>import('@/pages/Detail'),
         meta: {
             show: true,
         }
@@ -47,7 +47,7 @@ export default [
     {
         path: "/addcartsuccess",
         name: 'addcartsuccess',
-        component: ()=>('@/pages/AddCartSuccess'),
+        component: ()=>import('@/pages/AddCartSuccess'),
         meta: {
             show: true,
         }
@@ -55,7 +55,7 @@ export default [
     {
         path: "/shopcart",
         name: 'shopcart',
-        component: ()=>('@/pages/ShopCart'),
+        component: ()=>import('@/pages/ShopCart'),
         meta: {
             show: true,
         }
@@ -63,7 +63,7 @@ export default [
     {
         path: "/trade",
         name: 'trade',
-        component: ()=>('@/pages/Trade'),
+        component: ()=>import('@/pages/Trade'),
         meta: {
             show: true,
         },
@@ -79,7 +79,7 @@ export default [
     {
         path: "/pay",
         name: 'pay',
-        component: ()=>('@/pages/Pay'),
+        component: ()=>import('@/pages/Pay'),
         meta: {
             show: true,
         },
@@ -99,7 +99,7 @@ export default [
     {
         path: "/paysuccess",
         name: 'paysuccess',
-        component: ()=>('@/pages/PaySuccess'),
+        component: ()=>import('@/pages/PaySuccess'),
         meta: {
             show: true,
         }
@@ -107,18 +107,18 @@ export default [
     {
         path: "/center",
         name: 'center',
-        component: ()=>('@/pages/Center'),
+        component: ()=>import('@/pages/Center'),
         meta: {
             show: true,
         },
         children: [
             {
                 path: 'myorder',
-                component: ()=>('@/pages/myOrder'),
+                component: ()=>import('@/pages/Center/myOrder'),
             },
             {
                 path: 'grouporder',
-                component: ()=>('@/pages/groupOrder')
+                component: ()=>import('@/pages/Center/groupOrder')
             },
             // center重定向
             {
